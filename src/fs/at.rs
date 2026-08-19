@@ -46,23 +46,13 @@ use {crate::fs::Timestamps, crate::timespec::Nsecs};
 /// `UTIME_NOW` for use with [`utimensat`].
 ///
 /// [`utimensat`]: crate::fs::utimensat
-#[cfg(not(any(
-    target_os = "espidf",
-    target_os = "horizon",
-    target_os = "redox",
-    target_os = "vita"
-)))]
+#[cfg(not(any(target_os = "espidf", target_os = "horizon", target_os = "vita")))]
 pub const UTIME_NOW: Nsecs = backend::c::UTIME_NOW as Nsecs;
 
 /// `UTIME_OMIT` for use with [`utimensat`].
 ///
 /// [`utimensat`]: crate::fs::utimensat
-#[cfg(not(any(
-    target_os = "espidf",
-    target_os = "horizon",
-    target_os = "redox",
-    target_os = "vita"
-)))]
+#[cfg(not(any(target_os = "espidf", target_os = "horizon", target_os = "vita")))]
 pub const UTIME_OMIT: Nsecs = backend::c::UTIME_OMIT as Nsecs;
 
 /// `openat(dirfd, path, oflags, mode)`—Opens a file.

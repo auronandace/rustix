@@ -1457,12 +1457,7 @@ pub fn tcp_nodelay<Fd: AsFd>(fd: Fd) -> io::Result<bool> {
 /// See the [module-level documentation] for more.
 ///
 /// [module-level documentation]: self#references-for-get_tcp_-and-set_tcp_-functions
-#[cfg(not(any(
-    target_os = "haiku",
-    target_os = "nto",
-    target_os = "openbsd",
-    target_os = "redox"
-)))]
+#[cfg(not(any(target_os = "haiku", target_os = "nto", target_os = "openbsd",)))]
 #[inline]
 #[doc(alias = "TCP_KEEPCNT")]
 pub fn set_tcp_keepcnt<Fd: AsFd>(fd: Fd, value: u32) -> io::Result<()> {
@@ -1474,12 +1469,7 @@ pub fn set_tcp_keepcnt<Fd: AsFd>(fd: Fd, value: u32) -> io::Result<()> {
 /// See the [module-level documentation] for more.
 ///
 /// [module-level documentation]: self#references-for-get_tcp_-and-set_tcp_-functions
-#[cfg(not(any(
-    target_os = "haiku",
-    target_os = "nto",
-    target_os = "openbsd",
-    target_os = "redox"
-)))]
+#[cfg(not(any(target_os = "haiku", target_os = "nto", target_os = "openbsd",)))]
 #[inline]
 #[doc(alias = "TCP_KEEPCNT")]
 pub fn tcp_keepcnt<Fd: AsFd>(fd: Fd) -> io::Result<u32> {
@@ -1519,12 +1509,7 @@ pub fn tcp_keepidle<Fd: AsFd>(fd: Fd) -> io::Result<Duration> {
 /// See the [module-level documentation] for more.
 ///
 /// [module-level documentation]: self#references-for-get_tcp_-and-set_tcp_-functions
-#[cfg(not(any(
-    target_os = "haiku",
-    target_os = "nto",
-    target_os = "openbsd",
-    target_os = "redox"
-)))]
+#[cfg(not(any(target_os = "haiku", target_os = "nto", target_os = "openbsd",)))]
 #[inline]
 #[doc(alias = "TCP_KEEPINTVL")]
 pub fn set_tcp_keepintvl<Fd: AsFd>(fd: Fd, value: Duration) -> io::Result<()> {
@@ -1536,12 +1521,7 @@ pub fn set_tcp_keepintvl<Fd: AsFd>(fd: Fd, value: Duration) -> io::Result<()> {
 /// See the [module-level documentation] for more.
 ///
 /// [module-level documentation]: self#references-for-get_tcp_-and-set_tcp_-functions
-#[cfg(not(any(
-    target_os = "haiku",
-    target_os = "nto",
-    target_os = "openbsd",
-    target_os = "redox"
-)))]
+#[cfg(not(any(target_os = "haiku", target_os = "nto", target_os = "openbsd",)))]
 #[inline]
 #[doc(alias = "TCP_KEEPINTVL")]
 pub fn tcp_keepintvl<Fd: AsFd>(fd: Fd) -> io::Result<Duration> {

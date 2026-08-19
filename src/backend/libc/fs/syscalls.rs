@@ -12,7 +12,7 @@ use crate::ffi::CStr;
 use crate::ffi::CString;
 #[cfg(not(any(target_os = "espidf", target_os = "horizon", target_os = "vita")))]
 use crate::fs::Access;
-#[cfg(not(any(target_os = "espidf", target_os = "redox")))]
+#[cfg(not(target_os = "espidf"))]
 use crate::fs::AtFlags;
 #[cfg(not(any(
     netbsdlike,
@@ -206,7 +206,6 @@ fn openat_via_syscall(
     }
 }
 
-#[cfg(not(target_os = "redox"))]
 pub(crate) fn openat(
     dirfd: BorrowedFd<'_>,
     path: &CStr,
@@ -288,7 +287,6 @@ pub(crate) fn readlink(path: &CStr, buf: &mut [u8]) -> io::Result<usize> {
     unsafe { ret_usize(c::readlink(c_str(path), buf.as_mut_ptr().cast(), buf.len()) as isize) }
 }
 
-#[cfg(not(target_os = "redox"))]
 #[inline]
 pub(crate) unsafe fn readlinkat(
     dirfd: BorrowedFd<'_>,
@@ -302,7 +300,6 @@ pub(crate) fn mkdir(path: &CStr, mode: Mode) -> io::Result<()> {
     unsafe { ret(c::mkdir(c_str(path), mode.bits() as c::mode_t)) }
 }
 
-#[cfg(not(target_os = "redox"))]
 pub(crate) fn mkdirat(dirfd: BorrowedFd<'_>, path: &CStr, mode: Mode) -> io::Result<()> {
     unsafe {
         ret(c::mkdirat(
@@ -338,7 +335,7 @@ pub(crate) fn link(old_path: &CStr, new_path: &CStr) -> io::Result<()> {
     unsafe { ret(c::link(c_str(old_path), c_str(new_path))) }
 }
 
-#[cfg(not(any(target_os = "espidf", target_os = "redox")))]
+#[cfg(not(target_os = "espidf"))]
 pub(crate) fn linkat(
     old_dirfd: BorrowedFd<'_>,
     old_path: &CStr,
@@ -401,7 +398,7 @@ pub(crate) fn unlink(path: &CStr) -> io::Result<()> {
     unsafe { ret(c::unlink(c_str(path))) }
 }
 
-#[cfg(not(any(target_os = "espidf", target_os = "redox")))]
+#[cfg(not(target_os = "espidf"))]
 pub(crate) fn unlinkat(dirfd: BorrowedFd<'_>, path: &CStr, flags: AtFlags) -> io::Result<()> {
     // macOS ≤ 10.9 lacks `unlinkat`.
     #[cfg(target_os = "macos")]
@@ -628,7 +625,6 @@ pub(crate) fn symlink(old_path: &CStr, new_path: &CStr) -> io::Result<()> {
     unsafe { ret(c::symlink(c_str(old_path), c_str(new_path))) }
 }
 
-#[cfg(not(target_os = "redox"))]
 pub(crate) fn symlinkat(
     old_path: &CStr,
     new_dirfd: BorrowedFd<'_>,
@@ -730,7 +726,7 @@ pub(crate) fn lstat(path: &CStr) -> io::Result<Stat> {
     }
 }
 
-#[cfg(not(any(target_os = "espidf", target_os = "redox")))]
+#[cfg(not(target_os = "espidf"))]
 pub(crate) fn statat(dirfd: BorrowedFd<'_>, path: &CStr, flags: AtFlags) -> io::Result<Stat> {
     // See the comments in `fstat` about using `crate::fs::statx` here.
     #[cfg(all(
@@ -812,7 +808,6 @@ pub(crate) fn access(path: &CStr, access: Access) -> io::Result<()> {
     target_os = "emscripten",
     target_os = "espidf",
     target_os = "horizon",
-    target_os = "redox",
     target_os = "vita"
 )))]
 pub(crate) fn accessat(
@@ -880,12 +875,7 @@ pub(crate) fn accessat(
     Ok(())
 }
 
-#[cfg(not(any(
-    target_os = "espidf",
-    target_os = "horizon",
-    target_os = "redox",
-    target_os = "vita"
-)))]
+#[cfg(not(any(target_os = "espidf", target_os = "horizon", target_os = "vita")))]
 pub(crate) fn utimensat(
     dirfd: BorrowedFd<'_>,
     path: &CStr,
@@ -1102,12 +1092,7 @@ pub(crate) fn chmod(path: &CStr, mode: Mode) -> io::Result<()> {
     unsafe { ret(c::chmod(c_str(path), mode.bits() as c::mode_t)) }
 }
 
-#[cfg(not(any(
-    linux_kernel,
-    target_os = "espidf",
-    target_os = "redox",
-    target_os = "wasi"
-)))]
+#[cfg(not(any(linux_kernel, target_os = "espidf", target_os = "wasi")))]
 pub(crate) fn chmodat(
     dirfd: BorrowedFd<'_>,
     path: &CStr,
@@ -1185,7 +1170,7 @@ pub(crate) fn fclonefileat(
     }
 }
 
-#[cfg(not(any(target_os = "espidf", target_os = "redox", target_os = "wasi")))]
+#[cfg(not(any(target_os = "espidf", target_os = "wasi")))]
 pub(crate) fn chownat(
     dirfd: BorrowedFd<'_>,
     path: &CStr,
@@ -1209,7 +1194,6 @@ pub(crate) fn chownat(
     apple,
     target_os = "espidf",
     target_os = "horizon",
-    target_os = "redox",
     target_os = "vita",
     target_os = "wasi"
 )))]
