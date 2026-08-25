@@ -273,6 +273,3 @@ check-cfg = [
     'cfg(target_arch, values("xtensa"))',
     'cfg(target_os, values("cygwin"))',
 ]
-
-[patch.crates-io]
-libc = { git = 'https://github.com/auronandace/libc.git', branch = 'redox-at' }
