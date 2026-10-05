@@ -42,7 +42,6 @@ pub(super) fn borrowed_fd(fd: BorrowedFd<'_>) -> LibcFd {
         windows,
         target_os = "espidf",
         target_os = "horizon",
-        target_os = "redox"
     ))
 ))]
 #[inline]
